@@ -1,0 +1,67 @@
+[debug] [2025-08-23T17:42:00.217Z] ----------------------------------------------------------------------
+[debug] [2025-08-23T17:42:00.218Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\sistemas02\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2025-08-23T17:42:00.218Z] CLI Version:   14.11.0
+[debug] [2025-08-23T17:42:00.218Z] Platform:      win32
+[debug] [2025-08-23T17:42:00.218Z] Node Version:  v22.17.0
+[debug] [2025-08-23T17:42:00.218Z] Time:          Sat Aug 23 2025 10:42:00 GMT-0700 (hora de verano del Pacífico)
+[debug] [2025-08-23T17:42:00.219Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-08-23T17:42:00.220Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2025-08-23T17:42:00.244Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-08-23T17:42:00.245Z] > authorizing via signed-in user (juanerpgr@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\sistemas02\Desktop\code\front-end\NEXT-JS\gimnasio
+
+[debug] [2025-08-23T17:42:00.667Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2025-08-23T17:42:00.667Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2025-08-23T17:42:06.537Z] Checked if tokens are valid: false, expires at: 1754088598223
+[debug] [2025-08-23T17:42:06.537Z] Checked if tokens are valid: false, expires at: 1754088598223
+[debug] [2025-08-23T17:42:06.537Z] > refreshing access token with scopes: []
+[debug] [2025-08-23T17:42:06.538Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-08-23T17:42:06.538Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-08-23T17:42:06.777Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-08-23T17:42:06.777Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-08-23T17:42:06.779Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=100
+[debug] [2025-08-23T17:42:07.252Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
+[debug] [2025-08-23T17:42:07.252Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[info] i  Using project gimnasio-154da (gimnasio) 
+[info] 
+=== Hosting Setup
+[debug] [2025-08-23T17:42:10.172Z] Checked if tokens are valid: true, expires at: 1755974525777
+[debug] [2025-08-23T17:42:10.172Z] Checked if tokens are valid: true, expires at: 1755974525777
+[debug] [2025-08-23T17:42:10.172Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/gimnasio-154da [none]
+[debug] [2025-08-23T17:42:10.352Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/gimnasio-154da 200
+[debug] [2025-08-23T17:42:10.352Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/gimnasio-154da {"projectId":"gimnasio-154da","projectNumber":"835518966652","displayName":"gimnasio","name":"projects/gimnasio-154da","resources":{"hostingSite":"gimnasio-154da"},"state":"ACTIVE","etag":"1_cf127a53-d45f-4a66-9476-d032c8608ed5"}
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
+[debug] [2025-08-23T17:42:18.333Z] ExitPromptError: User force closed the prompt with SIGINT
+    at Interface.sigint (C:\Users\sistemas02\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\@inquirer\core\dist\commonjs\lib\create-prompt.js:101:37)
+    at Interface.emit (node:events:518:28)
+    at Interface.emit (node:domain:489:12)
+    at [_ttyWrite] [as _ttyWrite] (node:internal/readline/interface:1132:18)
+    at ReadStream.onkeypress (node:internal/readline/interface:271:20)
+    at ReadStream.emit (node:events:530:35)
+    at ReadStream.emit (node:domain:489:12)
+    at emitKeys (node:internal/readline/utils:370:14)
+    at emitKeys.next (<anonymous>)
+    at ReadStream.onData (node:internal/readline/emitKeypressEvents:64:36)
+[error] 
+[error] Error: An unexpected error has occurred.
