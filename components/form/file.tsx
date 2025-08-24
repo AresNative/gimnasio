@@ -67,7 +67,7 @@ export function FileComponent(props: InputMediaProps) {
                     <div className="flex text-sm text-gray-600 dark:text-gray-100 dark:text-white">
                         <label
                             htmlFor="file-upload-docs"
-                            className="relative cursor-pointer bg-white dark:bg-zinc-800 rounded-md font-medium text-green-600 hover:text-green-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-green-500"
+                            className="relative cursor-pointer bg-white dark:bg-zinc-800 rounded-md font-medium text-red-600 hover:text-red-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-red-500"
                         >
                             <span>
                                 {documents.length === 0 ? "Subir archivos" : "Cambiar archivos"}

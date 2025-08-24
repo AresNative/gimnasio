@@ -132,7 +132,7 @@ export function CalendarComponent({ cuestion, setValue, register, errors }: Inpu
                     value={formatDisplayDate(birthDate)}
                     onClick={handleInputClick}
                     readOnly
-                    className="bg-white dark:bg-zinc-800 px-4 py-2 border focus:ring-green-500 focus:border-green-900 w-full sm:text-sm border-gray-300 dark:border-zinc-700 rounded-md focus:outline-none text-gray-600 dark:text-white [&:-webkit-autofill]:bg-white [&:-webkit-autofill]:text-gray-600 [&:-webkit-autofill]:dark:bg-zinc-800 [&:-webkit-autofill]:dark:text-white [&:-webkit-autofill]:transition-colors [&:-webkit-autofill]:duration-[999999s] cursor-pointer pr-8"
+                    className="bg-white dark:bg-zinc-800 px-4 py-2 border focus:ring-red-500 focus:border-red-900 w-full sm:text-sm border-gray-300 dark:border-zinc-700 rounded-md focus:outline-none text-gray-600 dark:text-white [&:-webkit-autofill]:bg-white [&:-webkit-autofill]:text-gray-600 [&:-webkit-autofill]:dark:bg-zinc-800 [&:-webkit-autofill]:dark:text-white [&:-webkit-autofill]:transition-colors [&:-webkit-autofill]:duration-[999999s] cursor-pointer pr-8"
                     placeholder={cuestion.placeholder}
                     {...register(cuestion.name, cuestion.require ? { required: "El campo es obligatorio." } : {})}
                 />

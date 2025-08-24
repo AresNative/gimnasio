@@ -220,7 +220,7 @@ export default function TicketPrinter() {
                                     {isConnected && (
                                         <button
                                             onClick={() => printToSerial(ticket)}
-                                            className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 text-sm"
+                                            className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-sm"
                                         >
                                             Imprimir
                                         </button>

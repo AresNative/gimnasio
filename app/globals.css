@@ -5,15 +5,15 @@
 /* @custom-variant dark (&:where(.dark, .dark *)); */
 :root {
   --background: #fff;
-
+  --primary: #ffe7a4;
   --switch-btn-bg: #fff;
-  --switch-border-color: #3c3c434a;
+  --switch-border-color: #3c3c4325;
   --switch-icon-color: #0f0f0f;
   --switch-bg-color: #f6f6f7;
 }
 [data-theme='dark'] {
   --background: #000;
-
+  --primary: #f36d00f3;
   --switch-btn-bg: #000;
   --switch-border-color: #525259ad;
   --switch-icon-color: #f2f2f2;

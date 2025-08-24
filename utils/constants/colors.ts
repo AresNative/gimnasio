@@ -1,8 +1,8 @@
 export const colorClasses = {
-  green: {
-    bg: "bg-green-50",
-    text: "text-green-600",
-    ring: "ring-green-500/10",
+  red: {
+    bg: "bg-red-50",
+    text: "text-red-600",
+    ring: "ring-red-500/10",
   },
   red: {
     bg: "bg-red-50",
@@ -52,10 +52,10 @@ export const colorClasses = {
 };
 export const buttonClasses = {
   success: {
-    bg: "bg-green-600",
-    hover: "hover:bg-green-100 hover:text-white",
-    text: "text-green-50",
-    ring: "ring-green-500/10",
+    bg: "bg-red-600",
+    hover: "hover:bg-red-100 hover:text-white",
+    text: "text-red-50",
+    ring: "ring-red-500/10",
   },
   error: {
     bg: "bg-red-600",
@@ -91,10 +91,10 @@ export const buttonClasses = {
 };
 export const alertClasses = {
   success: {
-    bg: "bg-green-50",
-    hover: "hover:bg-green-500 hover:text-white",
-    text: "text-green-600",
-    ring: "ring-green-500/10",
+    bg: "bg-red-50",
+    hover: "hover:bg-red-500 hover:text-white",
+    text: "text-red-600",
+    ring: "ring-red-500/10",
   },
   error: {
     bg: "bg-red-50",
@@ -132,7 +132,7 @@ export const alertClasses = {
 export const colorBorderClasses = {
   red: "border-red-500 bg-red-100",
   blue: "border-blue-500 bg-blue-100",
-  green: "border-green-500 bg-green-100",
+  red: "border-red-500 bg-red-100",
   yellow: "border-yellow-500 bg-yellow-100",
   purple: "border-purple-500 bg-purple-100",
   pink: "border-pink-500 bg-pink-100",

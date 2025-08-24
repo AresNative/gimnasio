@@ -27,7 +27,7 @@ export function Rating(props: StarRatingProps) {
                     cuestion.stars.map((star) => (
                         <Star
                             key={star}
-                            className={cn("transition-all duration-300 cursor-pointer", star <= (hover || rating) ? "text-green-500 stroke-green-500 fill-green-500" : " text-gray-500 stroke-slate-500 hover:text-green-500 hover:stroke-green-500 hover:fill-green-500")}
+                            className={cn("transition-all duration-300 cursor-pointer", star <= (hover || rating) ? "text-red-500 stroke-red-500 fill-red-500" : " text-gray-500 stroke-slate-500 hover:text-red-500 hover:stroke-red-500 hover:fill-red-500")}
                             onMouseEnter={() => setHover(star)}
                             onMouseLeave={() => setHover(0)}
                             onClick={() => handleRating(star)}

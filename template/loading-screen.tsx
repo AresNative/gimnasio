@@ -8,7 +8,7 @@ export const LoadingScreen = () => (
             className="flex flex-col items-center justify-center space-y-4"
         >
             <Loader2
-                className="h-12 w-12 text-green-600 animate-spin"
+                className="h-12 w-12 text-red-600 animate-spin"
                 aria-hidden="true"
             />
             <p className="text-lg text-gray-600 dark:text-gray-100 font-medium">Cargando pantalla...</p>
@@ -27,7 +27,7 @@ export const LoadingSection = ({ message }: LoadingSectionProps) => (
             className="flex flex-col items-center justify-center space-y-4"
         >
             <Loader2
-                className="h-12 w-12 text-green-600 animate-spin"
+                className="h-12 w-12 text-red-600 animate-spin"
                 aria-hidden="true"
             />
             <p className="text-lg text-gray-600 dark:text-gray-100 font-medium">{message ? message : "Cargando pantalla"}...</p>
