@@ -43,9 +43,8 @@ const Header: React.FC<HeaderProps> = ({
         <header
             className={cn(
                 `sticky top-0 z-40 transition-all duration-300 safe-area-top`,
-                /* showBackButton || isScrolled
-                    ? 'bg-[var(--background)]/80 border-b border-gray-200 dark:border-gray-700'
-                    : 'bg-gradient-to-r from-red-800 to-red-600 ', */
+                showBackButton || isScrolled
+                && 'bg-[var(--background)]/30 border-b border-gray-200 dark:border-gray-700',
                 className
             )}
             aria-label="Cabecera principal"
@@ -69,12 +68,12 @@ const Header: React.FC<HeaderProps> = ({
 
                     <h1
                         className={cn(
-                            "font-light tracking-tight truncate pb-2 pt-0",
-                            showBackButton ?? "text-center m-auto", isScrolled ? "text-red-700 text-2xl" : "text-white text-5xl",
+                            "tracking-tight truncate pb-2 pt-0 font-bold",
+                            showBackButton ?? "text-center m-auto", isScrolled ? "text-red-700 text-2xl" : "text-red-700 text-5xl",
                         )}
                         aria-level={1}
                     >
-                        <img src="/favicon.svg" alt="Logo" className="size-15 inline-block mr-2" />
+                        <img src="/favicon.svg" alt="Logo" className={cn(showBackButton ? "size-35" : "size-10", " inline-block mr-2")} /> Valle Fit
                     </h1>
                 </ul>
 

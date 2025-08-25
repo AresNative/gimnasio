@@ -25,14 +25,15 @@ import { ImgComponent as Image } from "./img";
 import { Rating } from "./rating";
 
 import { TagInputComponent as TagInput } from "./tag-input"
-
-import { usePostUserLoginMutation } from "@/hooks/reducers/auth";
 import { Button } from "../button";
 import Link from "next/link";
-import { usePostLandingMutation, usePostLandingJsonMutation } from "@/hooks/reducers/api_landing";
 import { useAppDispatch } from "@/hooks/selector";
 import { openAlertReducer } from "@/hooks/reducers/drop-down";
 import { CircleCheckBig } from "lucide-react";
+
+import { productsThunks } from "@/hooks/reducers/product";
+import { usersThunks } from "@/hooks/reducers/user";
+import { loginUser } from "@/hooks/reducers/auth";
 
 export const MainForm = ({ message_button, dataForm, actionType, aditionalData, action, valueAssign, onSuccess, formName, modelName, iconButton }: MainFormProps) => {
   const dispatch = useAppDispatch()
@@ -53,23 +54,34 @@ export const MainForm = ({ message_button, dataForm, actionType, aditionalData, 
     formState: { errors },
   } = useForm();
 
-  const [postUserLogin] = usePostUserLoginMutation();
-  const [postLandingJson] = usePostLandingJsonMutation();
-  const [postLanding] = usePostLandingMutation();
-
-  async function getMutationFunction(actionType: string, data: FormData | any) {
-    const payload = formName ? data : { [modelName ?? actionType.toLowerCase()]: modelName ? data : [data] };
-
+  async function getMutationFunction(actionType: string, data: any) {
     switch (actionType) {
       case "post-login":
-        return await postUserLogin(data).unwrap();
+        return dispatch(loginUser(data)).unwrap();
+      case "users-create":
+        return await dispatch(usersThunks.createItem(data)).unwrap();
+
+      case "users-fetchAll":
+        return await dispatch(usersThunks.fetchAll()).unwrap();
+
+      case "users-fetchById":
+        return await dispatch(usersThunks.fetchById(data.id)).unwrap();
+
+      case "products-create":
+        return await dispatch(productsThunks.createItem(data)).unwrap();
+
+      case "products-fetchAll":
+        return await dispatch(productsThunks.fetchAll()).unwrap();
+
       default:
-        const functionFetch = formName ? postLanding : postLandingJson;
-        return await functionFetch({
-          url: actionType,
-          data: payload,
-          signal: new AbortController().signal,
-        }).unwrap();
+        dispatch(openAlertReducer({
+          title: "Error en el envío del formulario",
+          message: "Revise los campos a llenar y vuelva a intentarlo",
+          type: "error",
+          icon: "archivo",
+          duration: 4000
+        }))
+        throw new Error(`Acción no soportada: ${actionType}`);
     }
   }
   // Efecto para restaurar los valores del formulario al cambiar de página
@@ -128,7 +140,6 @@ export const MainForm = ({ message_button, dataForm, actionType, aditionalData, 
       }
       reset();
     } catch (error: any) {
-      console.log("Error en el envío del formulario:", error)
       dispatch(openAlertReducer(error.data.message ?
         {
           title: "Error en el envío del formulario",

@@ -1,86 +1,86 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { EnvConfig } from "@/utils/constants/env.config";
-import { getLocalStorageItem, removeFromLocalStorage, setLocalStorageItem } from "@/utils/functions/local-storage";
-import { getCookie } from "@/utils/functions/cookies";
+// store/slices/authSlice.ts
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { auth } from "@/utils/functions/firebase";
+import {
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged,
+    User,
+} from "firebase/auth";
 
-const { api: apiUrl } = EnvConfig();
+export interface AuthState {
+    user: User | null;
+    loading: boolean;
+    error: string | null;
+}
 
-export const auth = createApi({
-    reducerPath: "auth",
-    refetchOnFocus: true,
-    baseQuery: fetchBaseQuery({
-        baseUrl: apiUrl,
-        prepareHeaders: (headers) => {
-            const token = getLocalStorageItem('token'); // <- usa cookie
-            headers.set("Content-Type", "application/json");
-            if (token) {
-                headers.set("Authorization", `Bearer ${token}`);
-            }
-            return headers;
-        },
-    }),
-    endpoints: (builder) => ({
-        postUserRegister: builder.mutation({
-            query: (data) => ({
-                url: "v1/users/register",
-                method: "POST",
-                body: data,
-            }),
-        }),
-        postUserLogin: builder.mutation({
-            query: (data) => ({
-                url: "v1/users/login",
-                method: "POST",
-                body: data,
-            }),
-            onQueryStarted: async (_, { queryFulfilled }) => {
-                try {
-                    const { data: responseData } = await queryFulfilled;
+const initialState: AuthState = {
+    user: null,
+    loading: false,
+    error: null,
+};
 
-                    if (responseData.token) {
-                        const options = "path=/; SameSite=Lax";
-                        // Si estás en HTTPS, agrega "; Secure"
-                        document.cookie = `token=${responseData.token}; ${options}`;
-                        document.cookie = `user-role=${responseData.role.trimEnd()}; ${options}`;
-                        document.cookie = `user-id=${responseData.userId}; ${options}`;
-                        setLocalStorageItem("user-role", responseData.role.trimEnd());
-                        setLocalStorageItem("user-id", responseData.userId);
-                        setLocalStorageItem("token", responseData.token);
-                    }
-                } catch (error) {
-                    console.error("Error al hacer login:", error);
-                }
-            },
-        }),
-        postLogut: builder.mutation({
-            query: (userId) => ({
-                url: `v1/users/logout`,
-                method: "POST",
-                params: { id: userId },
-            }),
-            onQueryStarted: async (_, { queryFulfilled }) => {
-                try {
-                    await queryFulfilled;
-                    // Eliminar cookies (se hace expirándolas)
-                    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-                    document.cookie = "user-role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-                    document.cookie = "user-id=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-                    removeFromLocalStorage("user-role");
-                    removeFromLocalStorage("user-id");
-                    removeFromLocalStorage("token");
-                } catch (error) {
-                    console.log("Error al hacer logout:", error);
-                }
-            },
-        }),
-    }),
+// ---- Async actions para login / logout ----
+export const loginUser = createAsyncThunk(
+    "auth/loginUser",
+    async (
+        { email, password }: { email: string; password: string },
+        { rejectWithValue }
+    ) => {
+        try {
+            const res = await signInWithEmailAndPassword(auth, email, password);
+            return res.user;
+        } catch (err: any) {
+            return rejectWithValue(err.message);
+        }
+    }
+);
+
+export const logoutUser = createAsyncThunk("auth/logoutUser", async () => {
+    await signOut(auth);
+    return null;
 });
 
-// Utilidad para leer cookies del cliente
+// ---- Slice (inspirado en createGenericSlice, pero adaptado) ----
+export const authSlice = createSlice({
+    name: "auth",
+    initialState,
+    reducers: {
+        clearError: (state) => {
+            state.error = null;
+        },
+        setUser: (state, action: PayloadAction<User | null>) => {
+            state.user = action.payload;
+        },
+    },
+    extraReducers: (builder) => {
+        builder
+            // login
+            .addCase(loginUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(loginUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload;
+            })
+            .addCase(loginUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
+            // logout
+            .addCase(logoutUser.fulfilled, (state) => {
+                state.user = null;
+            });
+    },
+});
 
+export const { clearError, setUser } = authSlice.actions;
+export default authSlice.reducer;
 
-export const {
-    usePostLogutMutation,
-    usePostUserLoginMutation,
-    usePostUserRegisterMutation,
-} = auth;
+// ---- Inicializador: mantiene sesión persistida ----
+export const initAuthListener = (dispatch: any) => {
+    onAuthStateChanged(auth, (user) => {
+        dispatch(setUser(user));
+    });
+};
