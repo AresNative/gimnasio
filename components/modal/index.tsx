@@ -6,6 +6,7 @@ import { cn } from "@/utils/functions/cn"
 import { useAppDispatch, useAppSelector } from "@/hooks/selector"
 import { useEffect } from "react"
 import { closeModalReducer } from "@/hooks/reducers/drop-down"
+import { RootState } from "@/hooks/store"
 
 interface ModalProps {
     modalName: string
@@ -18,7 +19,7 @@ export function Modal({ modalName, title, children, maxWidth = "2xl" }: ModalPro
     // Handle escape key
     const dialogRef = React.useRef<HTMLDialogElement | null>(null);
     const dispatch = useAppDispatch();
-    const isOpen = useAppSelector((state: any) => state.dropDownReducer.modals[modalName]);
+    const isOpen = useAppSelector((state: RootState) => state.dropDownReducer.modals[modalName]);
 
     useEffect(() => {
         const handleEscape = (e: KeyboardEvent) => {

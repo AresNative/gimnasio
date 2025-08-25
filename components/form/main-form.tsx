@@ -140,10 +140,10 @@ export const MainForm = ({ message_button, dataForm, actionType, aditionalData, 
       }
       reset();
     } catch (error: any) {
-      dispatch(openAlertReducer(error.data.message ?
+      dispatch(openAlertReducer(error.message ?
         {
           title: "Error en el envío del formulario",
-          message: error.data.message,
+          message: error.message,
           type: "error",
           icon: "archivo",
           duration: 4000

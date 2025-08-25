@@ -6,11 +6,12 @@ import { ArchiveRestore, CircleAlert } from "lucide-react";
 import { useEffect } from "react";
 import { clearAlert } from "@/hooks/reducers/drop-down";
 import { cn } from "@/utils/functions/cn";
+import { RootState } from "@/hooks/store";
 
 export default function Alert() {
     const dispatch = useAppDispatch();
-    const alert = useAppSelector((state) => state.dropDownReducer.alert);
-    const { type, icon, title, message, buttonText, action, duration } = alert;
+    const alert = useAppSelector((state: RootState) => state.dropDownReducer.alert);
+    const { type, icon, title, message, buttonText, actionPayload, duration } = alert;
     const styles = alertClasses[type];
 
     const iconsMap = {
@@ -33,7 +34,7 @@ export default function Alert() {
     };
 
     const handleAction = () => {
-        action?.();
+        actionPayload?.();
         dispatch(clearAlert());
     };
 

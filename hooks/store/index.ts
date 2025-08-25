@@ -1,9 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
-import { api } from "@/hooks/reducers/api";
-import { api_int } from "@/hooks/reducers/api_int";
-import { api_landing } from "@/hooks/reducers/api_landing";
 import { EnvConfig } from "@/utils/constants/env.config";
 
 import dropDownReducer from "@/hooks/reducers/drop-down";
@@ -22,20 +19,17 @@ export const store = configureStore({
     cart: cartReducer,
     app: appReducer,
     auth: authReducer, // 🔹 tu slice de auth
-    [api.reducerPath]: api.reducer,
-    [api_int.reducerPath]: api_int.reducer,
-    [api_landing.reducerPath]: api_landing.reducer,
   },
   devTools: config.mode !== "production",
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         // Ignora estas rutas específicas
-        ignoredPaths: ["dropDown.alert.action"],
+        ignoredPaths: ["dropDown.alert.action", "__rtkq/focused"],
         // Ignora estas acciones específicas
-        ignoredActions: ["dropDown/openAlertReducer"],
+        ignoredActions: ["dropDown/openAlertReducer", "auth.user"],
       },
-    }).concat([api.middleware, api_int.middleware, api_landing.middleware]),
+    }).concat([]),
 });
 
 setupListeners(store.dispatch);

@@ -1,43 +1,50 @@
 // drop-down.ts (slice actualizado)
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+// Tipos para las alertas
+type AlertIcon = "archivo" | "alert";
+type AlertType = "success" | "error" | "warning" | "completed" | "info";
+
+// Interfaz modificada para no almacenar funciones
+interface BaseAlertProps {
+  title?: string;
+  message: string;
+  buttonText?: string;
+  icon: AlertIcon;
+  type: AlertType;
+  duration?: number;
+  actionType?: string; // En lugar de una función, usamos un identificador
+  actionPayload?: any; // Datos para la acción si son necesarios
+}
 
 interface ModalState {
   [modalName: string]: boolean;
 }
 
-interface BaseAlertProps {
-  title?: string;
-  message: string;
-  buttonText?: string;
-  icon: "archivo" | "alert";
-  type: "success" | "error" | "warning" | "completed" | "info";
-  duration?: number;
-  action?: (...args: any[]) => void;
-}
-
-export interface DropDowState {
+interface DropDownState {
   alert: BaseAlertProps;
   modals: ModalState;
   cuestionActivate: unknown;
 }
 
+// Estado inicial sin funciones
 const initialAlertState: BaseAlertProps = {
   title: "",
   message: "",
   buttonText: "",
   type: "completed",
-  duration: 0,
+  duration: 3000,
   icon: "archivo",
-  action: () => {},
+  // action y actionPayload son opcionales, así que no los incluimos por defecto
 };
 
-const initialState: DropDowState = {
+const initialState: DropDownState = {
   alert: initialAlertState,
   modals: {},
   cuestionActivate: null,
 };
 
-export const dropDow = createSlice({
+// Creación del slice
+export const dropDownSlice = createSlice({
   name: "dropDown",
   initialState,
   reducers: {
@@ -51,9 +58,7 @@ export const dropDow = createSlice({
       state.alert = initialAlertState;
     },
     openModalReducer: (state, action: PayloadAction<{ modalName: string }>) => {
-      // Solo maneja modales, no afecta alertas
       const { modalName } = action.payload;
-      // Cierra otros modales antes de abrir uno nuevo
       Object.keys(state.modals).forEach((key) => {
         state.modals[key] = false;
       });
@@ -82,6 +87,5 @@ export const {
   openModalReducer,
   closeModalReducer,
   toggleModalReducer,
-} = dropDow.actions;
-
-export default dropDow.reducer;
+} = dropDownSlice.actions;
+export default dropDownSlice.reducer;
