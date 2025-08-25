@@ -35,8 +35,7 @@ export const loginUser = createAsyncThunk(
         credentials.email,
         credentials.password
       );
-      console.log(result);
-      setLocalStorageItem("token", result.providerId);
+      setLocalStorageItem("token", result.user);
       return result.user;
     } catch (error: any) {
       return rejectWithValue(error.message);

@@ -48,4 +48,9 @@ export const navigationAdmin = [
     href: "/report",
     icon: Clock10,
   },
+  {
+    name: "Checkins",
+    href: "/checkins",
+    icon: Clock10,
+  },
 ];

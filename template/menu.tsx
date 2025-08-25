@@ -63,12 +63,7 @@ const AppMenu: React.FC<MenuProps> = ({ isScrolled }) => {
     const navigationItems = () => {
         const role = userData.token;
         if (!role) return navigationDefault;
-        const navigationMap: any = {
-            admin: navigationAdmin,
-            user: navigationUser
-            // ... otros roles
-        };
-        return navigationMap[role] || navigationUser;
+        return navigationAdmin || navigationUser;
     };
 
     return (
