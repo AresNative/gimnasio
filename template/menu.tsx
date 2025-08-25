@@ -4,7 +4,7 @@ import Link from "next/link";
 import MainForm from '@/components/form/main-form';
 import { Menu, LogOut, LogIn, UserPlus } from 'lucide-react';
 import { LogInField } from '@/utils/constants/forms/logIn';
-import { navigationAdmin, navigationAlmacen, navigationDefault, navigationUser, navigationVentas } from '@/utils/constants/router';
+import { navigationAdmin, navigationDefault, navigationUser } from '@/utils/constants/router';
 import { getLocalStorageItem } from '@/utils/functions/local-storage';
 import { cn } from '@/utils/functions/cn';
 import { closeModalReducer, openAlertReducer, openModalReducer } from '@/hooks/reducers/drop-down';
@@ -24,20 +24,14 @@ const AppMenu: React.FC<MenuProps> = ({ isScrolled }) => {
     const dispatch = useAppDispatch();
     // Estado para almacenar los datos del usuario
     const [userData, setUserData] = useState<{
-        role: string | null;
-        id: string | null;
         token: string | null;
     }>({
-        role: null,
-        id: null,
         token: null,
     });
 
     // Obtener datos de localStorage solo en el cliente
     useEffect(() => {
         setUserData({
-            role: getLocalStorageItem("user-role"),
-            id: getLocalStorageItem("user-id"),
             token: getLocalStorageItem("token"),
         });
     }, []);
@@ -63,37 +57,15 @@ const AppMenu: React.FC<MenuProps> = ({ isScrolled }) => {
 
 
     const handleLogout = async () => {
-        if (!userData.id) return;
 
-        /* try {
-            await logoutProcess(userData.id).unwrap();
-            setMenuOpen(false);
-            dispatch(
-                openAlertReducer({
-                    title: "Sesion cerrada",
-                    message: "Vuelve pronto!",
-                    type: "info",
-                    icon: "alert",
-                    duration: 4000
-                })
-            );
-            // Actualizar estado después de logout
-            setUserData({ role: null, id: null, token: null });
-            navigation.push("/");
-        } catch (error) {
-            console.error("Logout failed:", error);
-        } */
     };
 
     const navigationItems = () => {
-        const role = userData.role;
+        const role = userData.token;
         if (!role) return navigationDefault;
         const navigationMap: any = {
             admin: navigationAdmin,
-            user: navigationUser,
-            almacen: navigationAlmacen,
-            seguridad: navigationAlmacen,
-            ventas: navigationVentas,
+            user: navigationUser
             // ... otros roles
         };
         return navigationMap[role] || navigationUser;
@@ -119,9 +91,9 @@ const AppMenu: React.FC<MenuProps> = ({ isScrolled }) => {
                 <header className="bg-gradient-to-r from-red-600 to-red-800 text-white p-4">
                     {userData.token ? (
                         <section className="flex flex-col gap-2">
-                            <span className=''>
+                            {/*   <span className=''>
                                 {userData.role}
-                            </span>
+                            </span> */}
                             <button
                                 onClick={handleLogout}
                                 className="text-center cursor-pointer flex items-center justify-center w-full py-2 px-4 bg-white text-red-700 font-semibold rounded-lg gap-2"
@@ -198,8 +170,6 @@ const AppMenu: React.FC<MenuProps> = ({ isScrolled }) => {
                         try {
                             // Actualizar datos de usuario después de login exitoso
                             setUserData({
-                                role: getLocalStorageItem("user-role"),
-                                id: getLocalStorageItem("user-id"),
                                 token: getLocalStorageItem("token"),
                             });
                             dispatch(closeModalReducer({ modalName: "login-modal" }));

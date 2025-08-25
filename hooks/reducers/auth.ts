@@ -1,12 +1,15 @@
 // store/slices/authSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { auth } from "@/utils/functions/firebase";
 import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
   User,
+  UserCredential,
 } from "firebase/auth";
+import { AppDispatch } from "../store";
+import { auth } from "@/utils/functions/firebase";
+import { setLocalStorageItem } from "@/utils/functions/local-storage";
 
 export interface AuthState {
   user: User | null;
@@ -20,28 +23,39 @@ const initialState: AuthState = {
   error: null,
 };
 
-// ---- Async actions para login / logout ----
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (
-    { email, password }: { email: string; password: string },
+    credentials: { email: string; password: string },
     { rejectWithValue }
   ) => {
     try {
-      const res = await signInWithEmailAndPassword(auth, email, password);
-      return res.user;
-    } catch (err: any) {
-      return rejectWithValue(err.message);
+      const result: UserCredential = await signInWithEmailAndPassword(
+        auth,
+        credentials.email,
+        credentials.password
+      );
+      console.log(result);
+      setLocalStorageItem("token", result.providerId);
+      return result.user;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
     }
   }
 );
 
-export const logoutUser = createAsyncThunk("auth/logoutUser", async () => {
-  await signOut(auth);
-  return null;
-});
+export const logoutUser = createAsyncThunk(
+  "auth/logoutUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      await signOut(auth);
+      return null;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
-// ---- Slice (inspirado en createGenericSlice, pero adaptado) ----
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -49,13 +63,12 @@ export const authSlice = createSlice({
     clearError: (state) => {
       state.error = null;
     },
-    setUser: (state, action: PayloadAction<any | null>) => {
+    setUser: (state, action: PayloadAction<User | null>) => {
       state.user = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
-      // login
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -68,7 +81,6 @@ export const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-      // logout
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
       });
@@ -78,8 +90,7 @@ export const authSlice = createSlice({
 export const { clearError, setUser } = authSlice.actions;
 export default authSlice.reducer;
 
-// ---- Inicializador: mantiene sesión persistida ----
-export const initAuthListener = (dispatch: any) => {
+export const initAuthListener = (dispatch: AppDispatch) => {
   onAuthStateChanged(auth, (user) => {
     dispatch(setUser(user));
   });

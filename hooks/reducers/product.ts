@@ -1,6 +1,6 @@
 // hooks/reducers/users.ts
 
-import { createGenericSlice } from "../slices/firebase";
+import { createGenericSlice } from "./firebase";
 
 interface Product {
   id: string;

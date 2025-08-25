@@ -30,91 +30,22 @@ export const navigationDefault = [
   },
 ];
 export const navigationUser = [
-  /*   {
-    name: "Pantalla Inicial",
-    href: "/",
-    icon: House,
-  }, */
   {
-    name: "Proyectos",
-    href: "/proyectos",
-    icon: ClipboardList,
-  },
-];
-export const navigationVentas = [
-  /*  {
-    name: "Pantalla Inicial",
-    href: "/",
-    icon: House,
-  }, */
-  {
-    name: "Reporteria",
-    href: "/reporteria",
-    icon: ChartArea,
-  },
-  {
-    name: "Subastas",
-    href: "/subastas",
-    icon: ChartColumnStacked,
-  },
-  {
-    name: "Pick Up",
-    href: "/pick-up",
-    icon: Truck,
-  },
-  {
-    name: "Proyectos",
-    href: "/proyectos",
-    icon: ClipboardList,
-  },
-];
-export const navigationAlmacen = [
-  /* {
-    name: "Pantalla Inicial",
-    href: "/",
-    icon: House,
-  }, */
-  {
-    name: "Reporteria",
-    href: "/reporteria",
-    icon: ChartArea,
-  },
-  {
-    name: "Proyectos",
-    href: "/proyectos",
+    name: "Dashboard",
+    href: "/dashboard",
     icon: ClipboardList,
   },
 ];
 
 export const navigationAdmin = [
-  /* {
-    name: "Pantalla Inicial",
-    href: "/",
-    icon: House,
-  }, */
   {
-    name: "Reporteria",
-    href: "/reporteria",
+    name: "Dashboard",
+    href: "/dashboard",
     icon: ChartArea,
   },
   {
-    name: "Nominas",
-    href: "/nominas",
+    name: "Report",
+    href: "/report",
     icon: Clock10,
-  },
-  {
-    name: "Subastas",
-    href: "/subastas",
-    icon: ChartColumnStacked,
-  },
-  {
-    name: "Proyectos",
-    href: "/proyectos",
-    icon: ClipboardList,
-  },
-  {
-    name: "Contaduria",
-    href: "/contaduria",
-    icon: Receipt,
   },
 ];

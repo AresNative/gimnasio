@@ -60,18 +60,8 @@ export const MainForm = ({ message_button, dataForm, actionType, aditionalData, 
         return dispatch(loginUser(data)).unwrap();
       case "users-create":
         return await dispatch(usersThunks.createItem(data)).unwrap();
-
-      case "users-fetchAll":
-        return await dispatch(usersThunks.fetchAll()).unwrap();
-
-      case "users-fetchById":
-        return await dispatch(usersThunks.fetchById(data.id)).unwrap();
-
       case "products-create":
         return await dispatch(productsThunks.createItem(data)).unwrap();
-
-      case "products-fetchAll":
-        return await dispatch(productsThunks.fetchAll()).unwrap();
 
       default:
         dispatch(openAlertReducer({
