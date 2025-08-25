@@ -1,8 +1,8 @@
 export const colorClasses = {
-  red: {
-    bg: "bg-red-50",
-    text: "text-red-600",
-    ring: "ring-red-500/10",
+  green: {
+    bg: "bg-green-50",
+    text: "text-green-600",
+    ring: "ring-green-500/10",
   },
   red: {
     bg: "bg-red-50",
@@ -130,7 +130,7 @@ export const alertClasses = {
 }; // Añadido para evitar modificaciones si usas TypeScript
 
 export const colorBorderClasses = {
-  red: "border-red-500 bg-red-100",
+  green: "border-green-500 bg-green-100",
   blue: "border-blue-500 bg-blue-100",
   red: "border-red-500 bg-red-100",
   yellow: "border-yellow-500 bg-yellow-100",
