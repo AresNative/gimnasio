@@ -51,7 +51,7 @@ const UsersCrud: React.FC = () => {
             {/* FORM */}
             <form
                 onSubmit={handleSubmit}
-                className="mb-8 bg-white p-6 rounded-xl shadow-md border space-y-4"
+                className="mb-8 bg-white p-6 rounded-xl shadow-md border border-gray-200 space-y-4"
             >
                 <div className="grid md:grid-cols-2 gap-4">
                     <div className="flex flex-col">
@@ -61,7 +61,7 @@ const UsersCrud: React.FC = () => {
                             placeholder="Ej. Juan Pérez"
                             value={formData.name}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                            className="p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                            className="p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
                             required
                         />
                     </div>
@@ -72,7 +72,7 @@ const UsersCrud: React.FC = () => {
                             placeholder="correo@ejemplo.com"
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                            className="p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                            className="p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
                             required
                         />
                     </div>
@@ -81,7 +81,7 @@ const UsersCrud: React.FC = () => {
                         <select
                             value={formData.role}
                             onChange={(e) => setFormData({ ...formData, role: e.target.value as any })}
-                            className="p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                            className="p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="member">Miembro</option>
                             <option value="trainer">Entrenador</option>
@@ -149,7 +149,7 @@ const UsersCrud: React.FC = () => {
                             {items.map((user) => (
                                 <tr
                                     key={user.id}
-                                    className="border-t hover:bg-gray-50 transition-colors"
+                                    className="border-t border-gray-200 hover:bg-gray-50 transition-colors"
                                 >
                                     <td className="p-3">{user.name}</td>
                                     <td className="p-3">{user.email}</td>

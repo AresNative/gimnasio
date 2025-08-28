@@ -86,7 +86,7 @@ const AttendanceReports: React.FC = () => {
                         type="date"
                         value={dateRange.start}
                         onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
-                        className="p-2 border rounded"
+                        className="p-2 border border-gray-200 rounded"
                     />
                 </div>
                 <div>
@@ -95,7 +95,7 @@ const AttendanceReports: React.FC = () => {
                         type="date"
                         value={dateRange.end}
                         onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
-                        className="p-2 border rounded"
+                        className="p-2 border border-gray-200 rounded"
                     />
                 </div>
             </div>
@@ -135,7 +135,7 @@ const AttendanceReports: React.FC = () => {
                         </thead>
                         <tbody>
                             {checkins.slice(0, 10).map((checkin) => (
-                                <tr key={checkin.id} className="border-b">
+                                <tr key={checkin.id} className="border-b border-gray-200">
                                     <td className="py-2 px-4">{checkin.memberName}</td>
                                     <td className="py-2 px-4">{checkin.checkInTime.toLocaleString()}</td>
                                     <td className="py-2 px-4">

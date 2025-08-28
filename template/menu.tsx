@@ -8,9 +8,11 @@ import { navigationAdmin, navigationDefault, navigationUser } from '@/utils/cons
 import { getLocalStorageItem } from '@/utils/functions/local-storage';
 import { cn } from '@/utils/functions/cn';
 import { closeModalReducer, openAlertReducer, openModalReducer } from '@/hooks/reducers/drop-down';
-import { useAppDispatch } from '@/hooks/selector';
+import { useAppDispatch, useAppSelector } from '@/hooks/selector';
 import { Modal } from '@/components/modal';
 import { useRouter } from "next/navigation";
+import { logoutUser } from '@/hooks/reducers/auth';
+import { RootState } from '@/hooks/store';
 
 interface MenuProps {
     isScrolled?: boolean;
@@ -20,7 +22,7 @@ const AppMenu: React.FC<MenuProps> = ({ isScrolled }) => {
     const navigation = useRouter();
     const [loginModalOpen, setLoginModalOpen] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
-
+    const store = useAppSelector((state: RootState) => state.auth)
     const dispatch = useAppDispatch();
     // Estado para almacenar los datos del usuario
     const [userData, setUserData] = useState<{
@@ -28,6 +30,11 @@ const AppMenu: React.FC<MenuProps> = ({ isScrolled }) => {
     }>({
         token: null,
     });
+    useEffect(() => {
+        console.log(store);
+
+        store.token && setUserData({ token: store.token })
+    }, [store])
 
     // Obtener datos de localStorage solo en el cliente
     useEffect(() => {
@@ -57,7 +64,10 @@ const AppMenu: React.FC<MenuProps> = ({ isScrolled }) => {
 
 
     const handleLogout = async () => {
-
+        await dispatch(logoutUser());
+        navigation.push("/"); // Redirigir a la página de login
+        setMenuOpen(false);
+        setUserData({ token: null });
     };
 
     const navigationItems = () => {

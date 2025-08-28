@@ -6,18 +6,24 @@ import {
   onAuthStateChanged,
   User,
   UserCredential,
+  IdTokenResult,
 } from "firebase/auth";
 import { AppDispatch } from "../store";
 import { auth } from "@/utils/functions/firebase";
-import { setLocalStorageItem } from "@/utils/functions/local-storage";
+import {
+  removeFromLocalStorage,
+  setLocalStorageItem,
+} from "@/utils/functions/local-storage";
 
 export interface AuthState {
+  token: string | null;
   user: User | null;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: AuthState = {
+  token: null,
   user: null,
   loading: false,
   error: null,
@@ -35,8 +41,13 @@ export const loginUser = createAsyncThunk(
         credentials.email,
         credentials.password
       );
-      setLocalStorageItem("token", result.user);
-      return result.user;
+
+      // Obtener el token actualizado
+      const idTokenResult: IdTokenResult = await result.user.getIdTokenResult();
+      const token = idTokenResult.token;
+
+      setLocalStorageItem("token", token);
+      return { user: result.user, token };
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -48,6 +59,7 @@ export const logoutUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       await signOut(auth);
+      removeFromLocalStorage("token");
       return null;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -62,8 +74,12 @@ export const authSlice = createSlice({
     clearError: (state) => {
       state.error = null;
     },
-    setUser: (state, action: PayloadAction<User | null>) => {
-      state.user = action.payload;
+    setAuthState: (
+      state,
+      action: PayloadAction<{ user: User | null; token: string | null }>
+    ) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
     },
   },
   extraReducers: (builder) => {
@@ -74,7 +90,8 @@ export const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -82,15 +99,25 @@ export const authSlice = createSlice({
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
+        state.token = null;
       });
   },
 });
 
-export const { clearError, setUser } = authSlice.actions;
+export const { clearError, setAuthState } = authSlice.actions;
 export default authSlice.reducer;
 
 export const initAuthListener = (dispatch: AppDispatch) => {
-  onAuthStateChanged(auth, (user) => {
-    dispatch(setUser(user));
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      // Obtener el token actualizado
+      const idTokenResult = await user.getIdTokenResult();
+      const token = idTokenResult.token;
+      setLocalStorageItem("token", token);
+      dispatch(setAuthState({ user, token }));
+    } else {
+      removeFromLocalStorage("token");
+      dispatch(setAuthState({ user: null, token: null }));
+    }
   });
 };

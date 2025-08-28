@@ -36,7 +36,7 @@ export const store = configureStore({
     memberships: membershipsReducer, // Agregar el nuevo reducer
     payments: paymentsReducer, // Agregar el nuevo reducer
   },
-  devTools: config.mode !== "production",
+  devTools: true /* : config.mode !== "production" */,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

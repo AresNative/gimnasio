@@ -57,7 +57,7 @@ const CheckinSystem: React.FC = () => {
                                 value={memberCode}
                                 onChange={(e) => setMemberCode(e.target.value)}
                                 placeholder="ID o email del miembro"
-                                className="flex-grow p-2 border rounded-l"
+                                className="flex-grow p-2 border border-gray-200 rounded-l"
                                 required
                             />
                             <button
@@ -102,12 +102,12 @@ const CheckinSystem: React.FC = () => {
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         placeholder="Buscar por nombre o email"
-                        className="w-full p-2 border rounded mb-4"
+                        className="w-full p-2 border border-gray-200 rounded mb-4"
                     />
 
                     <div className="max-h-96 overflow-y-auto">
                         {filteredMembers.map(member => (
-                            <div key={member.id} className="flex justify-between items-center p-3 border-b">
+                            <div key={member.id} className="flex justify-between items-center p-3 border-b border-gray-200">
                                 <div>
                                     <p className="font-medium">{member.name}</p>
                                     <p className="text-sm text-gray-500">{member.email}</p>
